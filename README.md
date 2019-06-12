@@ -59,5 +59,55 @@ localhost:8090/makediv/<value1>/<value2>
 Send and save a message in the application database:
 
 ```
-localhost:8090/store/<message>
+localhost:8090/message/save/<message>
+```
+
+Gets all messages:
+
+```
+localhost:8090/message/get
+```
+
+Updated message by id:
+
+```
+localhost:8090/message/update/<id>/<new_message>
+```
+
+Delete message by id:
+
+```
+localhost:8090/message/delete/<id>
+```
+
+### Message example
+
+Create a new message (using %20 as space):
+
+```
+localhost:8090/message/save/This%20is%20a%20test%20message!!!
+```
+
+See message and get the id:
+
+```
+localhost:8090/message/get
+```
+
+Supposing that message id is 1, let's go to update the message (using %20 as space):
+
+```
+localhost:8090/message/update/1/We%20are%20updating%20the%20saved%20message!
+```
+
+Gets the message again to see if it was updated:
+
+```
+localhost:8090/message/get
+```
+
+Delete the message:
+
+```
+localhost:8090/message/delete/1
 ```

@@ -13,16 +13,6 @@ public class HomeController implements ErrorController {
 	public String home() {
 		return "Hello world!!!";
 	}
-
-	@RequestMapping(value="/success")
-	public String success() {
-		return "Message saved successfully!";
-	}
-	
-	@RequestMapping(value="/empty")
-	public String empty() {
-		return "Empty message received.";
-	}
 	
 	@RequestMapping(value=PATH)
 	public String error() {
