@@ -10,6 +10,16 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class Utils {
 	
+	public static boolean isValidNumber(String number) {
+		try {
+			Integer.parseInt(number);
+		}catch (Exception e) {
+			return false;
+		}
+
+		return true;
+	}
+	
 	public static String getTimestampStr() {
 		Timestamp timestamp = new Timestamp(System.currentTimeMillis());
 		return new SimpleDateFormat("dd/MM/yyyy HH:mm:ss").format(timestamp.getTime());
@@ -21,25 +31,37 @@ public class Utils {
 	}
 	
 	@RequestMapping(value="/makesum/{a}/{b}")
-	public String makeSum(@PathVariable("a") int a, @PathVariable("b") int b) {
-		return Integer.toString(a + b);
+	public String makeSum(@PathVariable("a") String a, @PathVariable("b") String b) {
+		if(!isValidNumber(a) || !isValidNumber(b)) {
+			return "Invalid parameters!";
+		}
+		return Integer.toString(Integer.parseInt(a) + Integer.parseInt(b));
 	}
 	
 	@RequestMapping(value="/makesub/{a}/{b}")
-	public String makeSub(@PathVariable("a") int a, @PathVariable("b") int b) {
-		return Integer.toString(a - b);
+	public String makeSub(@PathVariable("a") String a, @PathVariable("b") String b) {
+		if(!isValidNumber(a) || !isValidNumber(b)) {
+			return "Invalid parameters!";
+		}
+		return Integer.toString(Integer.parseInt(a) - Integer.parseInt(b));
 	}
 	
 	@RequestMapping(value="/makemul/{a}/{b}")
-	public String makeMul(@PathVariable("a") int a, @PathVariable("b") int b) {
-		return Integer.toString(a * b);
+	public String makeMul(@PathVariable("a") String a, @PathVariable("b") String b) {
+		if(!isValidNumber(a) || !isValidNumber(b)) {
+			return "Invalid parameters!";
+		}
+		return Integer.toString(Integer.parseInt(a) * Integer.parseInt(b));
 	}
 	
 	@RequestMapping(value="/makediv/{a}/{b}")
-	public String makeDiv(@PathVariable("a") int a, @PathVariable("b") int b) {
-		if(b == 0) {
+	public String makeDiv(@PathVariable("a") String a, @PathVariable("b") String b) {
+		if(!isValidNumber(a) || !isValidNumber(b)) {
+			return "Invalid parameters!";
+		}
+		if(Integer.parseInt(b) == 0) {
 			return "Invalid division by zero!";
 		}
-		return Integer.toString(a / b);
+		return Integer.toString(Integer.parseInt(a) / Integer.parseInt(b));
 	}
 }
