@@ -3,43 +3,59 @@ package com.app.webservice.controller;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
 
-@RestController
+@Controller
 public class Utils {
 	
-	public static String getTimestampStr() {
+	public static boolean isValidNumber(String number) {
+		try {
+			Integer.parseInt(number);
+		}catch (Exception e) {
+			return false;
+		}
+
+		return true;
+	}
+	
+	public static String getTimestamp() {
 		Timestamp timestamp = new Timestamp(System.currentTimeMillis());
 		return new SimpleDateFormat("dd/MM/yyyy HH:mm:ss").format(timestamp.getTime());
 	}
-
-	@RequestMapping(value="/gettimestamp")
-	public String getTimestamp() {
-		return getTimestampStr();
+	
+	public static String makeSum(@PathVariable("a") String a, @PathVariable("b") String b) {
+		if(!isValidNumber(a) || !isValidNumber(b)) {
+			return "Invalid parameters!";
+		}
+		return Integer.toString(Integer.parseInt(a) + Integer.parseInt(b));
 	}
 	
-	@RequestMapping(value="/makesum/{a}/{b}")
-	public String makeSum(@PathVariable("a") int a, @PathVariable("b") int b) {
-		return Integer.toString(a + b);
+	public static String makeSub(@PathVariable("a") String a, @PathVariable("b") String b) {
+		if(!isValidNumber(a) || !isValidNumber(b)) {
+			return "Invalid parameters!";
+		}
+		return Integer.toString(Integer.parseInt(a) - Integer.parseInt(b));
 	}
 	
-	@RequestMapping(value="/makesub/{a}/{b}")
-	public String makeSub(@PathVariable("a") int a, @PathVariable("b") int b) {
-		return Integer.toString(a - b);
+	public static String makeMul(@PathVariable("a") String a, @PathVariable("b") String b) {
+		if(!isValidNumber(a) || !isValidNumber(b)) {
+			return "Invalid parameters!";
+		}
+		return Integer.toString(Integer.parseInt(a) * Integer.parseInt(b));
 	}
 	
-	@RequestMapping(value="/makemul/{a}/{b}")
-	public String makeMul(@PathVariable("a") int a, @PathVariable("b") int b) {
-		return Integer.toString(a * b);
-	}
-	
-	@RequestMapping(value="/makediv/{a}/{b}")
-	public String makeDiv(@PathVariable("a") int a, @PathVariable("b") int b) {
-		if(b == 0) {
+	public static String makeDiv(@PathVariable("a") String a, @PathVariable("b") String b) {
+		if(!isValidNumber(a) || !isValidNumber(b)) {
+			return "Invalid parameters!";
+		}
+		if(Integer.parseInt(b) == 0) {
 			return "Invalid division by zero!";
 		}
-		return Integer.toString(a / b);
+		return Integer.toString(Integer.parseInt(a) / Integer.parseInt(b));
+	}
+	
+	public static String getJsonResponse(int code, String message, String data) {
+		return String.format("{\"code\":\"%d\", \"message\":\"%s\", \"data\":\"%s\"}", code, message, data);
 	}
 }

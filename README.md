@@ -80,6 +80,12 @@ Delete message by id:
 localhost:8090/message/delete/<id>
 ```
 
+Get CEP Info (like ZIP code):
+
+```
+localhost:8090/getcepinfo/<cep_number>
+```
+
 ### Message example
 
 Create a new message (using %20 as space):
@@ -110,4 +116,12 @@ Delete the message:
 
 ```
 localhost:8090/message/delete/1
+```
+
+### CEP example
+
+Get info from CEP 70.170-900:
+
+```
+localhost:8090/getcepinfo/70170900
 ```

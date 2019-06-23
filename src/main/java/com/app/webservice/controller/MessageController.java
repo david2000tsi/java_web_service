@@ -28,7 +28,7 @@ public class MessageController {
 		System.out.println("Saving new message received.");
 
 		Message messageObj = new Message();
-		messageObj.setTimestamp(Utils.getTimestampStr());
+		messageObj.setTimestamp(Utils.getTimestamp());
 		messageObj.setMessage(message);
 		messageRepository.save(messageObj);
 		
