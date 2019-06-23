@@ -54,4 +54,8 @@ public class Utils {
 		}
 		return Integer.toString(Integer.parseInt(a) / Integer.parseInt(b));
 	}
+	
+	public static String getJsonResponse(int code, String message, String data) {
+		return String.format("{\"code\":\"%d\", \"message\":\"%s\", \"data\":\"%s\"}", code, message, data);
+	}
 }
