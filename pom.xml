@@ -12,6 +12,7 @@
 	<artifactId>webservice</artifactId>
 	<version>0.0.1</version>
 	<name>webservice</name>
+	<packaging>jar</packaging>
 	<description>Demo project for Spring Boot</description>
 
 	<properties>
