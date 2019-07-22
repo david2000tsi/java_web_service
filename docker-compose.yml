@@ -1,0 +1,13 @@
+version: "3"
+services:
+    ws_postgres:
+        container_name: ws_postgres
+        build:
+            context: .
+            dockerfile: Dockerfile-db
+        ports:
+            - "5432:5432"
+        networks:
+            - appnetwork
+networks:
+    appnetwork:

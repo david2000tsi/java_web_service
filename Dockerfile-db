@@ -1,0 +1,10 @@
+FROM postgres:9.4
+
+MAINTAINER david2000tsi@gmail.com
+
+ENV POSTGRES_USER postgres
+ENV POSTGRES_PASSWORD postgres
+ENV POSTGRES_DB webservice
+ENV PGDATA /var/lib/postgresql/data/pgdata
+
+RUN apt-get update && pg_createcluster 9.4 main --start && service postgresql start
