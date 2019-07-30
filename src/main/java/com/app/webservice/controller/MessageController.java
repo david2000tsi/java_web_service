@@ -1,5 +1,9 @@
 package com.app.webservice.controller;
 
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -8,6 +12,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.app.webservice.model.Message;
 import com.app.webservice.repository.MessageRepository;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 @Controller
 public class MessageController {
@@ -54,6 +59,33 @@ public class MessageController {
 
 		return messageStr;
 	}
+
+	// Handle get request.
+	@RequestMapping(value="/message/get/json")
+	@ResponseBody
+	public String getAllMessagesJson() {
+		String messagesJson = "";
+
+		try {
+			List<Message> mesagesList = (List<Message>) messageRepository.findAll();
+			Map<String, Message> messagesMap = new HashMap<>();
+			if(mesagesList.size() > 0) {
+				for(int i = 0; i < mesagesList.size(); i++) {
+					String iStr = String.format("%03d", i + 1);
+					messagesMap.put(iStr, mesagesList.get(i));
+				}
+
+				ObjectMapper objMap = new ObjectMapper();
+				objMap.writerWithDefaultPrettyPrinter();
+				messagesJson = objMap.writeValueAsString(messagesMap);
+			}
+		} catch(Exception e) {
+			// Handle exception...
+			messagesJson = "Exception: [" + e.getMessage() + "]";
+		}
+
+		return messagesJson;
+	}
 	
 	// Handle /update request with no parameters.
 	@RequestMapping(value= {"/message/update", "/message/update/{id}"})
@@ -64,7 +96,7 @@ public class MessageController {
 	
 	// Handle valid /update request.
 	@RequestMapping(value="/message/update/{id}/{newMessageStr}")
-	public String delete(@PathVariable("id") long id, @PathVariable("newMessageStr") String newMessageStr) {
+	public String update(@PathVariable("id") long id, @PathVariable("newMessageStr") String newMessageStr) {
 		Message message = messageRepository.findById(id).orElse(new Message());
 		
 		// Check if message is valid (if it was recovered from database).
